@@ -13,12 +13,13 @@ class WorkerRushBot(BotAI):
 
         if self.townhalls:
             nexus = self.townhalls.random()
+            if nexus.is_idle and self.can_afford(UnitTypeId.PROBE):
+              nexus.train(UnitTypeId.PROBE)
+
         else:
             if self.can_afford(UnitTypeId.NEXUS):
                 await self.expand_now()
                 
-        if nexus.is_idle and self.can_afford(UnitTypeId.PROBE):
-            nexus.train(UnitTypeId.PROBE)
 
 
 run_game(maps.get("AbyssalReefLE"), [
