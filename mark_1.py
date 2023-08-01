@@ -6,6 +6,7 @@ from sc2.bot_ai import BotAI
 
 class WorkerRushBot(BotAI):
     async def on_step(self, iteration: int):
+        print("currently on interation:", iteration)
         if iteration == 0:
             for worker in self.workers:
                 worker.attack(self.enemy_start_locations[0])
@@ -13,4 +14,4 @@ class WorkerRushBot(BotAI):
 run_game(maps.get("AbyssalReefLE"), [
     Bot(Race.Zerg, WorkerRushBot()),
     Computer(Race.Protoss, Difficulty.Medium)
-], realtime=True)
+], realtime=False)
