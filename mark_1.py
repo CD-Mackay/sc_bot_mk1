@@ -5,12 +5,7 @@ from sc2.data import Race, Difficulty
 from sc2.bot_ai import BotAI
 from sc2.ids.unit_typeid import UnitTypeId
 import random
-
-
-probe = UnitTypeId.PROBE
-pylon = UnitTypeId.PYLON
-cannon = UnitTypeId.PHOTONCANNON
-forge = UnitTypeId.FORGE
+from aliases import probe, forge, cannon, pylon
 
 class WorkerRushBot(BotAI):
     async def on_step(self, iteration: int):
