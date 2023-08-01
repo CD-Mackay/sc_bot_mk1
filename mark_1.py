@@ -5,8 +5,7 @@ from sc2.data import Race, Difficulty
 from sc2.bot_ai import BotAI
 from sc2.ids.unit_typeid import UnitTypeId
 import random
-
-
+from aliases import probe, forge, cannon, pylon
 
 class WorkerRushBot(BotAI):
     async def on_step(self, iteration: int):
@@ -16,26 +15,26 @@ class WorkerRushBot(BotAI):
 
         if self.townhalls:
             nexus = self.townhalls.random
-            if nexus.is_idle and self.can_afford(UnitTypeId.PROBE):
-              nexus.train(UnitTypeId.PROBE)
+            if nexus.is_idle and self.can_afford(probe):
+              nexus.train(probe)
         
-            elif not self.structures(UnitTypeId.PYLON) and self.already_pending(UnitTypeId.PYLON) == 0:
-              if self.can_afford(UnitTypeId.PYLON):
-                await self.build(UnitTypeId.PYLON, near=nexus)
+            elif not self.structures(pylon) and self.already_pending(pylon) == 0:
+              if self.can_afford(pylon):
+                await self.build(pylon, near=nexus)
 
-            elif self.structures(UnitTypeId.PYLON).amount < 5:
-              if self.can_afford(UnitTypeId.PYLON):
-                target_pylon = self.structures(UnitTypeId.PYLON).closest_to(self.enemy_start_locations[0])
+            elif self.structures(pylon).amount < 5:
+              if self.can_afford(pylon):
+                target_pylon = self.structures(pylon).closest_to(self.enemy_start_locations[0])
                 pos = target_pylon.position.towards(self.enemy_start_locations[0], random.randrange(8, 15))
-                await self.build(UnitTypeId.PYLON, near=pos)
+                await self.build(pylon, near=pos)
 
-            elif not self.structures(UnitTypeId.FORGE):
-               if self.can_afford(UnitTypeId.FORGE):
-                  await self.build(UnitTypeId.FORGE, near=self.structures(UnitTypeId.PYLON).closest_to(nexus))
+            elif not self.structures(forge):
+               if self.can_afford(forge):
+                  await self.build(forge, near=self.structures(pylon).closest_to(nexus))
 
-            elif self.structures(UnitTypeId.FORGE).ready and self.structures(UnitTypeId.PHOTONCANNON).amount < 3:
-               if self.can_afford(UnitTypeId.PHOTONCANNON):
-                  await self.build(UnitTypeId.PHOTONCANNON, near=self.structures(UnitTypeId.PYLON).closest_to(self.enemy_start_locations[0]))
+            elif self.structures(forge).ready and self.structures(cannon).amount < 3:
+               if self.can_afford(cannon):
+                  await self.build(cannon, near=self.structures(pylon).closest_to(self.enemy_start_locations[0]))
             
         else:
           if self.can_afford(UnitTypeId.NEXUS):
