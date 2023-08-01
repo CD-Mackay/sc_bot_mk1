@@ -12,13 +12,18 @@ class WorkerRushBot(BotAI):
         print("currently on interation:", iteration)
 
         if self.townhalls:
-            nexus = self.townhalls.random()
+            nexus = self.townhalls.random
             if nexus.is_idle and self.can_afford(UnitTypeId.PROBE):
               nexus.train(UnitTypeId.PROBE)
-
+        
+        elif not self.structures(UnitTypeId.PYLON) and self.already_pending(UnitTypeId.PYLON) == 0:
+            if self.can_afford(UnitTypeId.PYLON):
+              await self.build(UnitTypeId.PYLON, near=nexus)
+            
         else:
-            if self.can_afford(UnitTypeId.NEXUS):
+          if self.can_afford(UnitTypeId.NEXUS):
                 await self.expand_now()
+
                 
 
 
