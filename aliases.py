@@ -6,3 +6,6 @@ pylon = UnitTypeId.PYLON
 cannon = UnitTypeId.PHOTONCANNON
 forge = UnitTypeId.FORGE
 assimilator = UnitTypeId.ASSIMILATOR
+gateway = UnitTypeId.GATEWAY
+cybercore = UnitTypeId.CYBERNETICSCORE
+stargate = UnitTypeId.STARGATE
