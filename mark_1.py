@@ -27,6 +27,14 @@ class WorkerRushBot(BotAI):
                 target_pylon = self.structures(pylon).closest_to(self.enemy_start_locations[0])
                 pos = target_pylon.position.towards(self.enemy_start_locations[0], random.randrange(8, 15))
                 await self.build(pylon, near=pos)
+            
+            elif self.structures(assimilator).amount <= 1:
+               for nexus in self.structures(nexus):
+                  vespenes = self.vespene_geyser.closer_than(15, nexus)
+                  for vespene in vespenes:
+                     if self.can_afford(assimilator) and not self.already_pending(assimilator):
+                        await self.build(assimilator, vespene)
+
 
             elif not self.structures(forge):
                if self.can_afford(forge):
