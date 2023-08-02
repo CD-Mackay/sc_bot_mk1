@@ -36,8 +36,8 @@ class WorkerRushBot(BotAI):
                 await self.build(pylon, near=pos)
             
             elif self.structures(assimilator).amount <= 1:
-               for nexus in self.structures(nexus):
-                  vespenes = self.vespene_geyser.closer_than(15, nexus)
+               for nx in self.structures(UnitTypeId.NEXUS):
+                  vespenes = self.vespene_geyser.closer_than(15, nx)
                   for vespene in vespenes:
                      if self.can_afford(assimilator) and not self.already_pending(assimilator):
                         await self.build(assimilator, vespene)
