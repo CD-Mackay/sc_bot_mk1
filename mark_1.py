@@ -5,7 +5,7 @@ from sc2.data import Race, Difficulty
 from sc2.bot_ai import BotAI
 from sc2.ids.unit_typeid import UnitTypeId
 import random
-from aliases import probe, forge, cannon, pylon, assimilator
+from aliases import probe, forge, cannon, pylon, assimilator,gateway, cybercore, stargate, voidray
 
 class WorkerRushBot(BotAI):
     async def on_step(self, iteration: int):
@@ -18,6 +18,11 @@ class WorkerRushBot(BotAI):
             if nexus.is_idle and self.can_afford(probe):
               nexus.train(probe)
         
+            if self.structures(voidray).amount < 10 and self.can_afford(voidray):
+               for sg in self.structures(stargate).ready.idle:
+                  if self.can_afford(voidray):
+                     sg.train(voidray)
+
             elif not self.structures(pylon) and self.already_pending(pylon) == 0:
               if self.can_afford(pylon):
                 await self.build(pylon, near=nexus)
@@ -34,6 +39,20 @@ class WorkerRushBot(BotAI):
                   for vespene in vespenes:
                      if self.can_afford(assimilator) and not self.already_pending(assimilator):
                         await self.build(assimilator, vespene)
+              
+            elif not self.structures(gateway):
+               if self.can_afford(gateway):
+                  await self.build(gateway, near = self.structures(pylon).closest_to(nexus))
+
+            elif not self.structures(cybercore):
+               if self.can_afford(cybercore):
+                  await self.build(cybercore, near = self.structures(pylon).closest_to(nexus))
+
+            elif not self.structures(stargate):
+               if self.can_afford(stargate):
+                  await self.build(stargate, near = self.structures(pylon).closest_to(nexus))
+            
+
 
 
             elif not self.structures(forge):

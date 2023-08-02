@@ -9,3 +9,4 @@ assimilator = UnitTypeId.ASSIMILATOR
 gateway = UnitTypeId.GATEWAY
 cybercore = UnitTypeId.CYBERNETICSCORE
 stargate = UnitTypeId.STARGATE
+voidray = UnitTypeId.VOIDRAY
