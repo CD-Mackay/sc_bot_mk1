@@ -15,14 +15,16 @@ class WorkerRushBot(BotAI):
 
         if self.townhalls:
             nexus = self.townhalls.random
-            if nexus.is_idle and self.can_afford(probe):
-              nexus.train(probe)
-        
+
             if self.structures(voidray).amount < 10 and self.can_afford(voidray):
                for sg in self.structures(stargate).ready.idle:
                   if self.can_afford(voidray):
                      sg.train(voidray)
 
+            supply_remaining = self.supply_cap - self.supply_used
+            if nexus.is_idle and self.can_afford(probe) and supply_remaining > 4:
+              nexus.train(probe)
+      
             elif not self.structures(pylon) and self.already_pending(pylon) == 0:
               if self.can_afford(pylon):
                 await self.build(pylon, near=nexus)
@@ -66,6 +68,19 @@ class WorkerRushBot(BotAI):
         else:
           if self.can_afford(UnitTypeId.NEXUS):
             await self.expand_now()
+
+        if self.units(voidray).amount >= 3:
+           if self.enemy_units:
+              for vr in self.units(voidray).idle:
+                 vr.attack(random.choice(self.enemy_units))
+           
+           elif self.enemy_structures:
+              for vr in self.units(voidray).idle:
+                 vr.attack(random.choice(self.enemy_structures))
+
+           else:
+              for vr in self.units(voidray).idle:
+                 vr.attack(self.enemy_start_locations[0])
 
                 
 
