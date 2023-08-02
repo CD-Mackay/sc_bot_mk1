@@ -5,3 +5,4 @@ probe = UnitTypeId.PROBE
 pylon = UnitTypeId.PYLON
 cannon = UnitTypeId.PHOTONCANNON
 forge = UnitTypeId.FORGE
+assimilator = UnitTypeId.ASSIMILATOR
